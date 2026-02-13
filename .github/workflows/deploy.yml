@@ -1,0 +1,22 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: 13.232.243.92
+          username: root
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /root/devops-aws-docker-ci-cd
+            ./deploy.sh
+
